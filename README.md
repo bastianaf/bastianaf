@@ -2,4 +2,4 @@
 What we gonna build today?
 
 <sub>🧩 https://bastianaf.me</sub>  
-<sub>🐦 [@bastianaf](https://twitter.com/bastianaf)</sub>
+<sub>🐦 [@bastian__af](https://twitter.com/bastian__af)</sub>

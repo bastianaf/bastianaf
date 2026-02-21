@@ -1,0 +1,171 @@
+---
+const events = [
+  {
+    year: "2024",
+    title: "Senior Software Engineer",
+    company: "Acme Corp",
+    description:
+      "Leading the platform team — architecting microservices, improving developer tooling, and mentoring junior engineers across the org.",
+    tags: ["Leadership", "Platform", "Go", "Kubernetes"],
+    type: "work",
+  },
+  {
+    year: "2023",
+    title: "Open Source Milestone",
+    company: "Community",
+    description:
+      "Reached 1,000 GitHub stars on an open-source library for TypeScript utilities. Built and maintained by the community.",
+    tags: ["Open Source", "TypeScript"],
+    type: "milestone",
+  },
+  {
+    year: "2022",
+    title: "Software Engineer",
+    company: "StartupXYZ",
+    description:
+      "Joined as an early engineer and helped grow the team from 5 to 30 people. Built the core product API and frontend from the ground up.",
+    tags: ["React", "Node.js", "PostgreSQL"],
+    type: "work",
+  },
+  {
+    year: "2021",
+    title: "First Full-Stack Product",
+    company: "Side project",
+    description:
+      "Designed, built, and launched a SaaS product solo. Learned end-to-end product development, from idea to paying customers.",
+    tags: ["SaaS", "Indie Hacker"],
+    type: "milestone",
+  },
+  {
+    year: "2020",
+    title: "Junior Engineer",
+    company: "Agency Co",
+    description:
+      "Started my professional career building web apps for clients. Fell in love with React and TypeScript.",
+    tags: ["React", "TypeScript", "CSS"],
+    type: "work",
+  },
+  {
+    year: "2019",
+    title: "CS Degree",
+    company: "University",
+    description:
+      "Graduated with a degree in Computer Science. Final thesis on distributed consensus algorithms.",
+    tags: ["Education"],
+    type: "education",
+  },
+];
+
+const typeColors: Record<string, string> = {
+  work: "bg-brand-500 dark:bg-brand-400",
+  milestone: "bg-amber-500 dark:bg-amber-400",
+  education: "bg-emerald-500 dark:bg-emerald-400",
+};
+
+const typeRing: Record<string, string> = {
+  work: "ring-brand-200 dark:ring-brand-800",
+  milestone: "ring-amber-200 dark:ring-amber-800",
+  education: "ring-emerald-200 dark:ring-emerald-800",
+};
+---
+
+<section id="timeline" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 transition-colors duration-300">
+  <div class="max-w-4xl mx-auto">
+    <!-- Section header -->
+    <p class="text-sm font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
+      Timeline
+    </p>
+    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+      My journey so far
+    </h2>
+    <p class="text-slate-500 dark:text-slate-400 mb-16 max-w-xl">
+      A timeline of the key moments, roles, and milestones that have shaped who I am as an engineer.
+    </p>
+
+    <!-- Legend -->
+    <div class="flex flex-wrap gap-4 mb-12 text-sm">
+      <span class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span> Work
+      </span>
+      <span class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Milestone
+      </span>
+      <span class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Education
+      </span>
+    </div>
+
+    <!-- Timeline list -->
+    <ol class="relative">
+      {events.map((event, i) => (
+        <li
+          class="timeline-item relative pl-10 pb-12 last:pb-0"
+          data-index={i}
+        >
+          <!-- Vertical line (all but last) -->
+          <div class="absolute left-[11px] top-5 bottom-0 w-px bg-slate-200 dark:bg-slate-700 last:hidden" aria-hidden="true" />
+
+          <!-- Dot -->
+          <div
+            class={`absolute left-0 top-1 w-6 h-6 rounded-full ring-4 ring-white dark:ring-slate-900 ${typeColors[event.type]} ${typeRing[event.type]} flex items-center justify-center transition-transform duration-300 hover:scale-125`}
+          />
+
+          <!-- Card -->
+          <div class="group ml-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-md hover:border-brand-200 dark:hover:border-brand-800 transition-all duration-300">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div>
+                <span class="text-xs font-bold text-brand-600 dark:text-brand-400 tracking-widest uppercase">
+                  {event.year}
+                </span>
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white mt-0.5 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                  {event.title}
+                </h3>
+              </div>
+              <span class="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                {event.company}
+              </span>
+            </div>
+
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+              {event.description}
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              {event.tags.map((tag) => (
+                <span class="px-2.5 py-0.5 text-xs rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  // Intersection Observer for staggered timeline animations
+  const items = document.querySelectorAll<HTMLElement>(".timeline-item");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const index = parseInt(el.dataset.index ?? "0");
+          const delay = index * 80; // stagger by 80ms per item
+
+          setTimeout(() => {
+            el.classList.add("visible", "animate-fade-in-up");
+          }, delay);
+
+          observer.unobserve(el);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  items.forEach((item) => observer.observe(item));
+</script>
